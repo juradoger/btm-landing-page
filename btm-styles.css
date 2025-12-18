@@ -1,0 +1,2267 @@
+/* ============================================
+   BTM LANDING PAGE STYLES
+   Blue-throated Macaw - Barba Azul Reserve
+   
+   COLOR PALETTE (Based on the bird):
+   - Teal Blue: #0097A7, #00ACC1, #00BCD4
+   - Golden Yellow: #F9A825, #FFB300, #FFC107
+   - Sky Blue: #4FC3F7, #29B6F6, #03A9F4
+   - Deep Blue: #01579B, #0277BD
+   - Cream/White: #FFF8E1, #FFFDE7
+   
+   Armonía Brand Accents:
+   - Deep Green: #1B5E20, #2E7D32
+   - Earth Brown: #4E342E
+   
+   TYPOGRAPHY:
+   - Headings: Montserrat (similar to Proxima Nova)
+   - Body: Roboto Slab (similar to Roboto Serif)
+============================================ */
+
+/* ============================================
+   CSS VARIABLES
+============================================ */
+:root {
+  /* Primary Colors - From the Blue-throated Macaw */
+  --btm-teal-dark: #00838f;
+  --btm-teal: #0097a7;
+  --btm-teal-light: #00acc1;
+  --btm-cyan: #00bcd4;
+  --btm-cyan-light: #4dd0e1;
+
+  /* Golden Yellow - From the macaw's chest */
+  --btm-gold-dark: #f57f17;
+  --btm-gold: #f9a825;
+  --btm-gold-light: #ffb300;
+  --btm-amber: #ffc107;
+  --btm-amber-light: #ffd54f;
+
+  /* Sky Blues - From the background */
+  --btm-sky-dark: #0277bd;
+  --btm-sky: #03a9f4;
+  --btm-sky-light: #29b6f6;
+  --btm-sky-lighter: #4fc3f7;
+  --btm-sky-pale: #81d4fa;
+
+  /* Deep Blues */
+  --btm-deep-blue: #01579b;
+  --btm-navy: #0d47a1;
+
+  /* Custom blue requested by user */
+  --btm-blue: #1f7aa3;
+
+  /* Neutrals */
+  --btm-cream: #fff8e1;
+  --btm-cream-light: #fffde7;
+  --btm-white: #ffffff;
+  --btm-gray-light: #f5f5f5;
+  --btm-gray: #9e9e9e;
+  --btm-gray-dark: #616161;
+  --btm-charcoal: #37474f;
+
+  /* Armonía Brand Accents */
+  --btm-green-dark: #1b5e20;
+  --btm-green: #2e7d32;
+  --btm-brown: #4e342e;
+
+  /* Gradients */
+  --btm-gradient-teal: linear-gradient(135deg, var(--btm-teal-dark) 0%, var(--btm-cyan) 100%);
+  --btm-gradient-gold: linear-gradient(135deg, var(--btm-gold-dark) 0%, var(--btm-amber) 100%);
+  --btm-gradient-sky: linear-gradient(135deg, var(--btm-deep-blue) 0%, var(--btm-sky-light) 100%);
+  --btm-gradient-hero: linear-gradient(
+    180deg,
+    rgba(31, 122, 163, 0.95) 0%,
+    rgba(31, 122, 163, 0.80) 50%,
+    rgba(255, 255, 255, 0.98) 100%
+  );
+  --btm-gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+
+  /* Card overlay color (user requested #1c73a3 with transparency) */
+  --btm-card-blue-rgb: 28, 115, 163; /* #1c73a3 */
+  /* Make card background more transparent so overlay helps legibility */
+  --btm-card-blue-1: rgba(var(--btm-card-blue-rgb), 0.06);
+  --btm-card-blue-2: rgba(var(--btm-card-blue-rgb), 0.04);
+  --btm-card-blue-3: rgba(var(--btm-card-blue-rgb), 0.02);
+
+  /* Glass Effect */
+  --btm-glass-bg: rgba(255, 255, 255, 0.1);
+  --btm-glass-border: rgba(255, 255, 255, 0.2);
+  --btm-glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+  /* Typography */
+  /* Usar fuente redondeada Poppins */
+  --btm-font-heading: "Poppins", sans-serif;
+  --btm-font-body: "Poppins", sans-serif;
+
+  /* Font Sizes - Larger for elderly users */
+  --btm-text-xs: 0.875rem; /* 14px */
+  --btm-text-sm: 1rem; /* 16px */
+  --btm-text-base: 1.125rem; /* 18px */
+  --btm-text-lg: 1.25rem; /* 20px */
+  --btm-text-xl: 1.5rem; /* 24px */
+  --btm-text-2xl: 1.875rem; /* 30px */
+  --btm-text-3xl: 2.25rem; /* 36px */
+  --btm-text-4xl: 3rem; /* 48px */
+  --btm-text-5xl: 3.75rem; /* 60px */
+
+  /* Spacing */
+  --btm-space-xs: 0.5rem;
+  --btm-space-sm: 1rem;
+  --btm-space-md: 1.5rem;
+  --btm-space-lg: 2rem;
+  --btm-space-xl: 3rem;
+  --btm-space-2xl: 4rem;
+  --btm-space-3xl: 6rem;
+
+  /* Border Radius */
+  --btm-radius-sm: 8px;
+  --btm-radius-md: 12px;
+  --btm-radius-lg: 20px;
+  --btm-radius-xl: 30px;
+  --btm-radius-full: 9999px;
+
+  /* Transitions */
+  --btm-transition-fast: 0.2s ease;
+  --btm-transition-base: 0.3s ease;
+  --btm-transition-slow: 0.5s ease;
+}
+
+/* ============================================
+   RESET & BASE STYLES
+============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+/* ============================================
+   BODY - Main background with gradient & image
+   CUSTOMIZE: Change background image URL
+============================================ */
+.btm-body {
+  font-family: var(--btm-font-body);
+  font-size: var(--btm-text-base);
+  line-height: 1.7;
+  color: var(--btm-white);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  /* Fondo transparente para que no se vea la línea celeste */
+  background: transparent;
+}
+
+/* Pseudo-elemento para cubrir todo el ancho con fondo blanco */
+.btm-action-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 100%;
+  background: #ffffff;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* También aplicar a donation-section */
+.btm-donation-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 100%;
+  background: #ffffff;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Background overlay with pattern/texture */
+.btm-background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+
+  /* Subtle pattern overlay */
+  background-image: radial-gradient(circle at 20% 30%, rgba(255, 193, 7, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(0, 188, 212, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+}
+
+/* ============================================
+   MAIN CONTAINER
+============================================ */
+.btm-main-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--btm-space-lg);
+  overflow-x: visible;
+}
+
+/* ============================================
+   LOGO SECTION - Now inside hero section
+============================================ */
+.btm-logo-section {
+  display: flex;
+  justify-content: center;
+  padding: var(--btm-space-sm) 0 var(--btm-space-xs) 0;
+  position: relative;
+  z-index: 2;
+  /* No background - uses hero background image */
+  background: none;
+}
+
+  .btm-logo {
+    max-width: 180px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    transition: transform var(--btm-transition-base);
+  }
+
+.btm-logo:hover {
+  transform: scale(1.05);
+}
+
+/* ============================================
+   HERO SECTION
+============================================ */
+.btm-hero-section {
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0;
+  overflow: hidden;
+  margin-bottom: var(--btm-space-xl);
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: transparent;
+  border: none;
+}
+
+.btm-hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background: transparent;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* Hero Background Image */
+.btm-hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.btm-hero-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 100%;
+  max-height: none;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.btm-hero-gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Radial gradient: more transparent in center, intense at edges */
+  background: radial-gradient(
+    ellipse 80% 60% at center,
+    rgba(1, 87, 155, 0.15) 0%,
+    rgba(1, 87, 155, 0.25) 25%,
+    rgba(0, 131, 143, 0.45) 50%,
+    rgba(0, 131, 143, 0.70) 75%,
+    rgba(1, 87, 155, 0.85) 100%
+  );
+}
+
+/* Hero Content */
+.btm-hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: var(--btm-space-lg) var(--btm-space-2xl);
+  max-width: 900px;
+  margin: 0 auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Endangered Badge - Floating text warning, not a button */
+.btm-badge-endangered {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--btm-space-xs);
+  margin-bottom: var(--btm-space-xs);
+  margin-top: var(--btm-space-xs);
+  /* No button styling - just floating text */
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  animation: none;
+}
+
+.btm-badge-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--btm-amber);
+}
+
+.btm-badge-endangered span {
+  font-family: var(--btm-font-heading);
+  font-size: var(--btm-text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--btm-amber-light);
+  text-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 0 8px rgba(255, 193, 7, 0.4);
+}
+
+@keyframes btm-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(255, 152, 0, 0);
+  }
+}
+
+/* Hero Title - Brushed/Effect Style */
+.btm-hero-title {
+  font-family: var(--btm-font-heading);
+  font-size: var(--btm-text-5xl);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: var(--btm-space-md);
+  /* Reduced shadow */
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25), 2px 2px 0 rgba(0, 0, 0, 0.15), 0 0 20px rgba(255, 193, 7, 0.2);
+}
+
+  .btm-title-line {
+    display: block;
+    /* White bone color instead of pearl white */
+    color: #fef9e7;
+    line-height: 1.1;
+    word-wrap: break-word;
+    /* Reduced shadows - less intense */
+    text-shadow: 
+      -1px -1px 0 rgba(0, 0, 0, 0.3),
+      1px 1px 0 rgba(0, 0, 0, 0.3),
+      0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+.btm-title-highlight {
+  display: block;
+  line-height: 1.1;
+  background: linear-gradient(
+    90deg,
+    var(--btm-amber-light) 0%,
+    var(--btm-gold) 30%,
+    var(--btm-cyan-light) 70%,
+    var(--btm-sky-pale) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* Disabled animation for better performance */
+  /* animation: btm-gradient-shift 5s ease infinite; */
+  background-size: 200% auto;
+  /* Yellow diffused glow like the button */
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3))
+          drop-shadow(0 0 20px rgba(255, 235, 59, 0.4))
+          drop-shadow(0 0 40px rgba(255, 235, 59, 0.3))
+          drop-shadow(0 0 60px rgba(255, 235, 59, 0.2));
+}
+
+@keyframes btm-gradient-shift {
+  0%,
+  100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* Typewriter Effect */
+.btm-typewriter {
+  overflow: hidden;
+  border-right: 3px solid var(--btm-amber);
+  white-space: nowrap;
+  animation: btm-typing 3s steps(30, end) forwards, btm-blink-caret 0.75s step-end infinite;
+}
+
+@keyframes btm-typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes btm-blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--btm-amber);
+  }
+}
+
+/* Hero Subtitle - Elegant white text like Blue-throated Macaw */
+.btm-hero-subtitle {
+  font-family: "Arial", "Helvetica Neue", sans-serif;
+  font-size: var(--btm-text-xl);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.3px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: var(--btm-space-xl);
+  max-width: 700px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--btm-space-md);
+  box-sizing: border-box;
+  word-wrap: break-word;
+  /* Sombra más fuerte para que resalte mejor */
+  text-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 6px 16px rgba(0, 0, 0, 0.3),
+    -1px -1px 0 rgba(0, 0, 0, 0.4),
+    1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.btm-hero-subtitle strong {
+  font-weight: 600;
+  /* Same gradient color as "for the Blue-throated Macaw" */
+  background: linear-gradient(
+    90deg,
+    var(--btm-amber-light) 0%,
+    var(--btm-gold) 30%,
+    var(--btm-cyan-light) 70%,
+    var(--btm-sky-pale) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* Remove text-shadow inheritance and apply clean shadows with glow */
+  text-shadow: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4))
+          drop-shadow(0 0 20px rgba(255, 235, 59, 0.4))
+          drop-shadow(0 0 40px rgba(255, 235, 59, 0.3))
+          drop-shadow(0 0 60px rgba(255, 235, 59, 0.2));
+}
+
+/* ============================================
+   CTA BUTTONS - Elegant, gradient, no solid colors
+============================================ */
+.btm-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--btm-space-sm);
+  padding: var(--btm-space-md) var(--btm-space-xl);
+  font-family: "Poppins", "Nunito", "Montserrat", "Arial Nova", "Arial", "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--btm-text-lg);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--btm-radius-full);
+  transition: all var(--btm-transition-base);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+}
+
+.btm-cta-button span {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.btm-cta-primary {
+  /* Restored original golden/amber gradient */
+  background: linear-gradient(135deg, var(--btm-gold-dark) 0%, var(--btm-gold) 50%, var(--btm-amber) 100%);
+  color: var(--btm-deep-blue);
+  border: 2px solid transparent;
+  box-shadow: 0 4px 15px rgba(249, 168, 37, 0.4), 0 0 30px rgba(255, 193, 7, 0.2), inset 0 1px 0
+    rgba(255, 255, 255, 0.3);
+}
+
+.btm-cta-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.btm-cta-primary:hover {
+  transform: translateY(-3px);
+  /* Glowing effect on hover */
+  box-shadow: 
+    0 8px 25px rgba(249, 168, 37, 0.6),
+    0 0 50px rgba(255, 193, 7, 0.5),
+    0 0 80px rgba(255, 193, 7, 0.4),
+    0 0 100px rgba(255, 235, 59, 0.3);
+  filter: brightness(1.1);
+}
+
+.btm-cta-primary:active,
+.btm-cta-primary:focus {
+  transform: translateY(-1px);
+  /* Softer yellow glow on click - more diffused */
+  box-shadow: 
+    0 4px 15px rgba(249, 168, 37, 0.4),
+    0 0 40px rgba(255, 235, 59, 0.3),
+    0 0 60px rgba(255, 235, 59, 0.2);
+  filter: brightness(1.05);
+}
+
+.btm-cta-primary:hover::before {
+  left: 100%;
+}
+
+.btm-cta-secondary {
+  background: linear-gradient(135deg, rgba(0, 188, 212, 0.2) 0%, rgba(0, 151, 167, 0.3) 100%);
+  color: var(--btm-white);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btm-cta-secondary:hover {
+  background: linear-gradient(135deg, rgba(249, 168, 37, 0.3) 0%, rgba(255, 193, 7, 0.4) 100%);
+  border-color: var(--btm-amber);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(249, 168, 37, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btm-cta-icon {
+  width: 24px;
+  height: 24px;
+  transition: transform var(--btm-transition-fast);
+}
+
+/* ============================================
+   VIDEO SECTION
+============================================ */
+.btm-video-section {
+  margin-bottom: var(--btm-space-3xl);
+}
+
+.btm-section-header {
+  text-align: center;
+  margin-bottom: var(--btm-space-xl);
+}
+
+.btm-section-title {
+  font-family: var(--btm-font-heading);
+  font-size: var(--btm-text-4xl);
+  font-weight: 700;
+  color: var(--btm-white);
+  margin-bottom: var(--btm-space-sm);
+  /* Un poco más de sombra para que resalte sobre fondos claros,
+     sin llegar a ser exagerado. */
+  text-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.5),
+    0 0 18px rgba(0, 0, 0, 0.35);
+}
+
+/* En secciones con fondo blanco (como Why Your Donation Counts),
+   nunca usamos texto blanco directo: cambiamos a texto oscuro. */
+.btm-donation-section .btm-section-title {
+  color: #12313f;
+  text-shadow:
+    0 1px 3px rgba(255, 255, 255, 0.8),
+    0 0 8px rgba(255, 255, 255, 0.7);
+}
+
+.btm-title-gradient {
+  background: linear-gradient(90deg, var(--btm-amber-light) 0%, var(--btm-gold) 50%, var(--btm-cyan-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Reducir sombras para textos que usan gradientes/colores destacados
+   (ej. títulos con gradiente, highlights dorados/teal) */
+.btm-title-gradient,
+.btm-text-gradient-gold,
+.btm-text-gradient-teal,
+.btm-title-highlight,
+.btm-text-gradient {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+  filter: none !important;
+}
+
+.btm-title-underline {
+  width: 100px;
+  height: 4px;
+  background: var(--btm-gradient-gold);
+  border-radius: var(--btm-radius-full);
+  margin-top: var(--btm-space-sm);
+  /* Elegant effects for the progress bar */
+  box-shadow: 
+    0 2px 8px rgba(255, 193, 7, 0.4),
+    0 0 15px rgba(255, 193, 7, 0.3),
+    0 0 25px rgba(255, 235, 59, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* For stats section title: force two clean lines and better centering */
+.btm-stats-title-line {
+  display: block;
+}
+
+.btm-title-underline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: btm-shine 3s ease-in-out infinite;
+}
+
+@keyframes btm-shine {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 100%;
+  }
+}
+
+.btm-underline-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Video Wrapper */
+.btm-video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: var(--btm-radius-lg);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+.btm-video-frame-glow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  /* Soft yellow–blue diffused light around the video border, without exaggeration */
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255, 213, 79, 0.6) 0%, transparent 55%),
+    radial-gradient(circle at 90% 100%, rgba(3, 169, 244, 0.6) 0%, transparent 55%);
+  border-radius: calc(var(--btm-radius-lg) + 2px);
+  z-index: -1;
+  filter: blur(18px);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.btm-video-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: var(--btm-radius-lg);
+}
+
+/* ============================================
+   GLASS CARD STYLES
+============================================ */
+.btm-glass-card {
+  background: var(--btm-glass-bg);
+  border: 1px solid var(--btm-glass-border);
+  border-radius: var(--btm-radius-lg);
+  padding: var(--btm-space-xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--btm-glass-shadow);
+}
+
+.btm-glass-card-light {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Estilos de texto sin card - removidos, ahora usa btm-action-text-content */
+.btm-action-section .btm-glass-card {
+  display: none;
+}
+
+.btm-action-section .btm-paragraph {
+  font-family: "Poppins", "Nunito", "Montserrat", "Arial Nova", "Arial", "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--btm-text-base);
+  line-height: 1.6;
+  color: #12313f;
+  margin-bottom: var(--btm-space-sm);
+  text-shadow: none;
+}
+
+.btm-action-section .btm-paragraph-large {
+  font-size: var(--btm-text-lg);
+}
+
+.btm-action-section .btm-highlight-text {
+  color: var(--btm-cyan-light);
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* ============================================
+   SUPPORT SECTION - Why Your Support Matters
+============================================ */
+.btm-support-section {
+  margin-bottom: var(--btm-space-3xl);
+  padding: var(--btm-space-2xl) var(--btm-space-lg);
+  /* Fondo para toda la sección (galería + texto):
+     1) imagen a pantalla completa
+     2) degradado suave encima para que el texto se lea bien */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(224, 247, 250, 0.9) 0%,
+      rgba(179, 229, 252, 0.9) 40%,
+      rgba(1, 87, 155, 0.9) 100%
+    ),
+    url("public/images/img-main-btm.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 0;
+  box-shadow: none;
+  /* Hace que esta sección sea de ancho completo (100vw), centrada,
+     independientemente del ancho del contenedor padre. */
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.btm-support-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--btm-space-2xl);
+  align-items: center;
+}
+
+/* En esta sección, el texto no va en una “tarjeta” marcada; solo texto limpio */
+.btm-support-section .btm-glass-card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Mejor legibilidad del texto blanco sobre el degradado */
+.btm-support-section .btm-paragraph {
+  font-family: var(--btm-font-heading); /* letra más redondita, sin serif */
+  font-size: var(--btm-text-base);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.97);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45); /* sombra suave */
+  margin-bottom: var(--btm-space-sm);
+}
+
+.btm-support-section .btm-section-title-alt {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); /* también más suave */
+}
+
+.btm-support-section .btm-highlight-text,
+.btm-support-section .btm-highlight-number {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* “Matters” en este bloque: usar un degradado más claro para que se lea bien
+   sobre el fondo teal, igual de visible que “Why”. */
+.btm-support-section .btm-text-gradient-teal {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #e0f7fa 40%,
+    #b2ebf2 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Image Container with Frame */
+.btm-support-image-container,
+.btm-action-image-container {
+  position: relative;
+}
+
+.btm-support-image,
+.btm-action-image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--btm-radius-lg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+/* Two-block vertical gallery beside the support text */
+.btm-support-gallery {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr; /* Una columna un poco más grande */
+  grid-auto-rows: 120px;
+  gap: 0.75rem; /* Pequeñas separaciones entre imágenes */
+}
+
+.btm-support-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--btm-radius-md);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Variaciones de tamaño: grande, mediana, etc. */
+.btm-support-thumb--tall {
+  grid-row: span 2; /* Más alta, ocupa dos filas */
+}
+
+.btm-support-thumb--wide {
+  grid-column: span 2; /* Ocupa las dos columnas para un bloque grande */
+}
+
+/* Aparición progresiva de arriba hacia abajo cuando el bloque entra en vista */
+.btm-support-image-container.btm-visible .btm-support-thumb:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.btm-support-image-container.btm-visible .btm-support-thumb:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+.btm-support-image-container.btm-visible .btm-support-thumb:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+.btm-support-image-container.btm-visible .btm-support-thumb:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+.btm-support-image-container.btm-visible .btm-support-thumb:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+
+.btm-support-image-container.btm-visible .btm-support-thumb:nth-child(6) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+
+.btm-image-frame {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: -20px;
+  bottom: -20px;
+  border: 3px solid transparent;
+  border-image: var(--btm-gradient-teal) 1;
+  border-radius: var(--btm-radius-lg);
+  z-index: 0;
+}
+
+.btm-frame-gold {
+  border-image: var(--btm-gradient-gold) 1;
+  top: -20px;
+  left: -20px;
+  right: 20px;
+  bottom: 20px;
+}
+
+/* Section Title Alternative Style */
+.btm-section-title-alt {
+  font-family: var(--btm-font-heading);
+  font-size: var(--btm-text-3xl);
+  font-weight: 700;
+  color: var(--btm-white);
+  margin-bottom: var(--btm-space-lg);
+  line-height: 1.3;
+}
+
+/* Título más grande para "Your Gift Creates Real Action" */
+.btm-action-section .btm-section-title-alt {
+  font-family: "Poppins", "Nunito", "Montserrat", "Arial Nova", "Arial", "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--btm-charcoal);
+  text-shadow: none;
+  font-size: var(--btm-text-4xl);
+  font-weight: 700;
+  margin-bottom: var(--btm-space-xl);
+}
+
+.btm-text-gradient-gold {
+  background: var(--btm-gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btm-text-gradient-teal {
+  background: var(--btm-gradient-teal);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Paragraphs */
+.btm-paragraph {
+  font-size: var(--btm-text-lg);
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: var(--btm-space-md);
+}
+
+.btm-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.btm-paragraph-large {
+  font-size: var(--btm-text-xl);
+}
+
+.btm-paragraph strong {
+  color: var(--btm-amber-light);
+  font-weight: 600;
+}
+
+.btm-highlight-text {
+  color: var(--btm-cyan-light);
+  font-style: italic;
+}
+
+.btm-highlight-number {
+  color: var(--btm-gold);
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* En la sección "Your Gift Creates Real Action" usamos azul profundo,
+   no celeste, para el texto enfatizado (nowhere else on Earth) */
+.btm-action-section .btm-highlight-text {
+  color: var(--btm-gold);
+  font-weight: 700;
+  font-style: normal;
+  text-shadow: none;
+}
+
+/* ============================================
+   STATS SECTION - Historic Wins
+============================================ */
+.btm-stats-section {
+  margin-bottom: var(--btm-space-xl);              /* menos espacio antes de Donacion */
+  padding: var(--btm-space-lg) 0 var(--btm-space-2xl);
+  /* Sección limpia, sin fondo propio: el fondo va en cada card. */
+  background: transparent;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.btm-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--btm-space-lg);
+  /* Centra las cards y deja aire con los bordes laterales */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Dots for stats carousel */
+.btm-stats-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: var(--btm-space-md);
+}
+
+.btm-stats-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 2px solid rgba(2, 136, 209, 0.7);
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: all var(--btm-transition-base);
+}
+
+.btm-stats-dot--active {
+  background: rgba(2, 136, 209, 0.95);
+  transform: scale(1.15);
+  box-shadow: 0 0 10px rgba(2, 136, 209, 0.7);
+}
+
+/* Stat Card */
+.btm-stat-card {
+  /* Fondo con gradiente en tonos azul celeste - la imagen se agrega como elemento */
+  background: linear-gradient(
+    145deg,
+    var(--btm-card-blue-1) 0%,
+    var(--btm-card-blue-2) 45%,
+    var(--btm-card-blue-3) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--btm-radius-lg);
+  padding: var(--btm-space-sm);       /* menos padding → contenido más unido */
+  text-align: center;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  /* Capa de sombra constante bajo cada card */
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25),
+              0 8px 24px rgba(var(--btm-card-blue-rgb), 0.10);
+  transition: all var(--btm-transition-base);
+  position: relative;
+  overflow: hidden;
+  max-width: 260px;                  /* limita el ancho en desktop */
+  margin: 0 auto;
+}
+
+/* Overlay más claro para que las imágenes se vean mejor */
+.btm-stat-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.08) 100%);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ensure card children appear above the overlay */
+.btm-stat-card > *:not(.btm-stat-image) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Texto con sombras sutiles sin exagerar */
+.btm-stat-card .btm-stat-number,
+.btm-stat-card .btm-stat-label,
+.btm-stat-card .btm-stat-description {
+  color: var(--btm-white);
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btm-stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--btm-gradient-gold);
+  opacity: 0;
+  transition: opacity var(--btm-transition-base);
+}
+
+.btm-stat-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(255, 193, 7, 0.3);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.22),
+              0 10px 36px rgba(var(--btm-card-blue-rgb), 0.12),
+              0 0 30px rgba(255, 193, 7, 0.08);
+}
+
+.btm-stat-card:hover::before {
+  opacity: 1;
+}
+
+.btm-stat-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto var(--btm-space-sm);  /* menos espacio bajo el icono */
+  /* Fondo del icono con los tonos dorados de los números */
+  background: linear-gradient(135deg, rgba(249, 168, 37, 0.35) 0%, rgba(255, 193, 7, 0.25) 100%);
+  border-radius: var(--btm-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 193, 7, 0.6);
+}
+
+.btm-stat-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--btm-amber-light);       /* icono amarillo/dorado */
+}
+
+.btm-stat-number {
+  font-family: var(--btm-font-heading);
+  font-size: var(--btm-text-3xl);        /* un poco más pequeño para que 1200+ ha y 3000+ ha entren bien */
+  font-weight: 800;
+  /* Use a solid gold color for better legibility over overlays */
+  color: var(--btm-gold);
+  margin-bottom: 0.35rem;              /* un poco menos espacio */
+  /* Softer shadow so numbers are less 'heavy' */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  white-space: nowrap;                 /* asegura 1200+ ha en una sola línea */
+}
+
+.btm-stat-unit {
+  font-size: var(--btm-text-xl);
+}
+
+.btm-stat-label {
+  font-family: var(--btm-font-heading);
+  font-size: var(--btm-text-base);
+  font-weight: 600;
+  color: var(--btm-white);
+  margin-bottom: var(--btm-space-xs);  /* más cerca de la descripción */
+  text-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btm-stat-description {
+  font-size: var(--btm-text-sm);
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.5;                    /* más compacto */
+  margin-bottom: var(--btm-space-sm);  /* menos espacio al final */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.btm-stat-description strong {
+  color: var(--btm-amber-light);
+}
+
+/* Stat Card Image - Medio transparente como fondo */
+.btm-stat-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: inherit;
+  opacity: 0.7;
+  z-index: 0;
+  transition: opacity var(--btm-transition-base);
+  display: block;
+}
+
+.btm-stat-card:hover .btm-stat-image {
+  opacity: 0.8;
+}
+
+/* Asegurar que el overlay esté sobre la imagen pero debajo del contenido */
+.btm-stat-card::after {
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
+}
+
+.btm-stat-card > *:not(.btm-stat-image) {
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   DONATION SECTION - Why Your Donation Counts
+============================================ */
+.btm-donation-section {
+  margin-bottom: var(--btm-space-3xl);
+  padding: var(--btm-space-2xl) var(--btm-space-lg);
+  /* Section background white as requested */
+  background: var(--btm-white);
+  border-radius: 0;
+  border: none;
+  /* Full width - break out of container */
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Responsive padding para la sección */
+@media (max-width: 767px) {
+  .btm-donation-section {
+    padding: var(--btm-space-xl) var(--btm-space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .btm-donation-section {
+    padding: var(--btm-space-lg) var(--btm-space-sm);
+  }
+}
+
+.btm-section-subtitle {
+  font-family: "Arial", "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--btm-text-lg);
+  font-weight: 500;
+  max-width: 800px;
+  margin: 0 auto var(--btm-space-sm);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.btm-donation-section .btm-section-title {
+  /* dark title for white background */
+  color: var(--btm-charcoal);
+  text-shadow: none;
+}
+
+.btm-donation-section .btm-subtitle-white {
+  color: var(--btm-charcoal);
+  text-shadow: none;
+  font-weight: 400;
+}
+
+.btm-donation-section .btm-subtitle-gradient {
+  background: linear-gradient(90deg, var(--btm-amber) 0%, var(--btm-gold) 50% , var(--btm-amber-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+}
+
+.btm-amount-highlight {
+  font-size: var(--btm-text-2xl);
+  background: var(--btm-gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Donation list - progressive text laid out as responsive cards */
+.btm-donation-list {
+  margin-top: var(--btm-space-md);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--btm-space-lg);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--btm-space-lg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btm-donation-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--btm-space-md);
+  padding: var(--btm-space-lg);
+  border-radius: var(--btm-radius-lg);
+  background: transparent;
+  box-shadow: 0 8px 24px rgba(249, 168, 37, 0.25);
+  border: 2px solid var(--btm-gold);
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btm-donation-step:hover {
+  box-shadow: 0 12px 32px rgba(249, 168, 37, 0.35);
+  transform: translateY(-2px);
+}
+
+.btm-donation-bullet {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--btm-radius-md);
+  border: 1px solid var(--btm-gold);
+  background: transparent;
+  box-shadow: none;
+  margin-top: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 60px;
+  flex-shrink: 0;
+}
+
+.btm-donation-step-content {
+  flex: 1;
+}
+
+/* Línea de progreso vertical que conecta los puntos - Removida para diseño de cards */
+.btm-donation-bullet::after {
+  display: none;
+}
+
+/* Estados de progreso removidos - no se usan en este diseño */
+
+/* golden star icon inside the bullet */
+.btm-donation-bullet::before {
+  content: "★";
+  font-size: 20px;
+  color: var(--btm-amber);
+  text-shadow: 0 6px 18px rgba(31, 122, 163, 0.12);
+  line-height: 1;
+}
+
+/* When using inline SVGs, hide the legacy ::before glyph */
+.btm-donation-bullet::before { display: none !important; }
+
+/* Estilos de iconos - asegurar que se vean como contorno dorado sin relleno */
+.btm-donation-icon,
+.btm-donation-bullet svg {
+  width: 32px;
+  height: 32px;
+  display: block;
+  color: var(--btm-gold);
+  fill: none !important;
+}
+
+/* Forzar que todos los elementos SVG no tengan relleno */
+.btm-donation-bullet svg *,
+.btm-donation-bullet svg path,
+.btm-donation-bullet svg circle,
+.btm-donation-icon *,
+.btm-donation-icon path,
+.btm-donation-icon circle {
+  fill: none !important;
+  stroke: var(--btm-gold) !important;
+  stroke-width: 1.5 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+/* Estilos duplicados y no usados removidos */
+
+/* Centra también el bloque de título dentro de la sección de donación */
+.btm-donation-section .btm-section-header {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--btm-space-lg);
+}
+
+/* Donation Card Image */
+.btm-donation-image {
+  display: none; /* ya no usamos imágenes en esta sección */
+}
+
+/* Bloque de texto compacto que resalta sobre el fondo azul */
+.btm-donation-text-block {
+  background: transparent; /* ya no usamos caja oscura aquí */
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.btm-donation-title {
+  /* Letra más redondeada - Proxima Nova / Arial Nova style */
+  font-family: "Poppins", "Nunito", "Montserrat", "Arial Nova", "Arial", "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--btm-text-xl);      /* un poco más grande */
+  font-weight: 600;                   /* peso medio para más redondez */
+  color: #12313f;                      /* texto oscuro para fondo claro */
+  margin-bottom: var(--btm-space-xs); /* más unido al párrafo */
+  text-shadow: none;
+  text-align: left;
+  letter-spacing: -0.01em;            /* espaciado más compacto para aspecto más redondeado */
+}
+
+.btm-donation-text {
+  font-family: "Poppins", "Nunito", "Montserrat", "Arial Nova", "Arial", "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--btm-text-base);
+  font-weight: 400;
+  line-height: 1.6;
+  color: #12313f;
+  margin: 0;
+  letter-spacing: 0;
+}
+
+/* Responsive: tablets y pantallas medianas (992px - 1024px) */
+@media (max-width: 1024px) and (min-width: 992px) {
+  .btm-donation-list {
+    max-width: 100%;
+    padding: 0 var(--btm-space-md);
+    gap: var(--btm-space-md);
+  }
+}
+
+/* Responsive: tablets pequeñas y móviles grandes (768px - 991px) */
+@media (max-width: 991px) {
+  .btm-donation-list {
+    grid-template-columns: 1fr !important;
+    max-width: 100%;
+    padding: 0 var(--btm-space-md);
+    gap: var(--btm-space-lg);
+  }
+
+  .btm-donation-step {
+    padding: var(--btm-space-md);
+  }
+
+  .btm-donation-section .btm-section-header {
+    padding: 0 var(--btm-space-md);
+  }
+}
+
+/* Responsive: móviles (481px - 767px) */
+@media (max-width: 767px) {
+  .btm-donation-list {
+    grid-template-columns: 1fr !important;
+    padding: 0 var(--btm-space-md);
+    gap: var(--btm-space-lg);
+  }
+
+  .btm-donation-step {
+    padding: var(--btm-space-md);
+    gap: var(--btm-space-sm);
+  }
+
+  .btm-donation-bullet {
+    width: 56px;
+    height: 56px;
+    flex: 0 0 56px;
+  }
+
+  .btm-donation-icon,
+  .btm-donation-bullet svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .btm-donation-title {
+    font-size: var(--btm-text-lg);
+  }
+
+  .btm-donation-text {
+    font-size: var(--btm-text-sm);
+  }
+}
+
+/* Responsive: móviles pequeños (hasta 480px) */
+@media (max-width: 480px) {
+  .btm-donation-list {
+    padding: 0 var(--btm-space-sm);
+    gap: var(--btm-space-md);
+  }
+
+  .btm-donation-step {
+    padding: var(--btm-space-sm);
+    gap: var(--btm-space-xs);
+  }
+
+  .btm-donation-bullet {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+  }
+
+  .btm-donation-icon,
+  .btm-donation-bullet svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .btm-donation-title {
+    font-size: var(--btm-text-base);
+  }
+
+  .btm-donation-text {
+    font-size: var(--btm-text-xs);
+    line-height: 1.5;
+  }
+
+  .btm-donation-section .btm-section-header {
+    padding: 0 var(--btm-space-sm);
+  }
+}
+}
+
+/* ============================================
+   ACTION SECTION - Your Gift Creates Real Action
+============================================ */
+.btm-action-section {
+  margin-bottom: var(--btm-space-3xl);
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  padding: var(--btm-space-2xl) 0 !important;
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+  left: 0;
+  right: 0;
+}
+
+.btm-action-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--btm-space-2xl);
+  align-items: center;
+  background: #ffffff;
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 var(--btm-space-lg);
+  box-sizing: border-box;
+}
+
+.btm-action-text {
+  order: 1;
+}
+
+.btm-action-image-container {
+  order: 2;
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+.btm-action-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+/* Contenedor de texto sin card */
+.btm-action-text-content {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+.btm-action-text .btm-cta-button {
+  margin-top: var(--btm-space-md); /* botón más cerca del texto */
+  font-size: var(--btm-text-base);
+  padding: var(--btm-space-sm) var(--btm-space-lg);
+}
+
+/* ============================================
+   CONNECT SECTION - Stay Connected (Icons Only)
+============================================ */
+.btm-connect-section {
+  padding: var(--btm-space-2xl) 0;
+  margin-bottom: var(--btm-space-lg);
+}
+
+/* Más sombras al título */
+.btm-connect-section .btm-section-title {
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 6px 16px rgba(0, 0, 0, 0.15),
+    0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.btm-connect-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--btm-space-xl);
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.btm-connect-link {
+  text-decoration: none;
+  transition: all var(--btm-transition-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btm-connect-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  /* Estado base similar al hover: botón visible sin pasar el ratón */
+  background: linear-gradient(135deg, rgba(249, 168, 37, 0.25) 0%, rgba(0, 188, 212, 0.25) 100%);
+  border: 2px solid var(--btm-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all var(--btm-transition-base);
+}
+
+.btm-connect-icon {
+  width: 36px;
+  height: 36px;
+  color: var(--btm-blue); /* Azul (#1f7aa3) para los iconos */
+  transition: all var(--btm-transition-base);
+}
+
+.btm-connect-link:hover .btm-connect-icon-wrapper {
+  background: linear-gradient(135deg, rgba(255, 213, 79, 0.4) 0%, rgba(0, 188, 212, 0.45) 100%);
+  border-color: var(--btm-gold);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(249, 168, 37, 0.2);
+}
+
+.btm-connect-link:hover .btm-connect-icon {
+  color: var(--btm-gold);
+  transform: scale(1.1);
+}
+
+.btm-connect-label {
+  font-family: "Poppins", "Nunito", "Montserrat", "Arial Nova", "Arial", "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--btm-text-sm);
+  color: var(--btm-blue); /* Azul (#1f7aa3) para el texto */
+  font-weight: 500;
+  text-align: center;
+  text-shadow: none;
+}
+
+/* ============================================
+   ANIMATIONS
+============================================ */
+/* Fade In Up Animation */
+.btm-fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.btm-fade-in-up.btm-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered Animation Delays */
+.btm-delay-1 {
+  transition-delay: 0.1s;
+}
+.btm-delay-2 {
+  transition-delay: 0.2s;
+}
+.btm-delay-3 {
+  transition-delay: 0.3s;
+}
+.btm-delay-4 {
+  transition-delay: 0.4s;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+============================================ */
+/* ============================================
+   RESPONSIVE: TABLET (768px - 1024px)
+============================================ */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .btm-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--btm-space-md);
+  }
+
+  .btm-stat-card {
+    max-width: 280px;
+  }
+
+  .btm-stat-image {
+    opacity: 0.65;
+  }
+
+  .btm-donation-list {
+    max-width: 100%;
+    padding: 0 var(--btm-space-md);
+    gap: var(--btm-space-md);
+  }
+
+  .btm-support-content,
+  .btm-action-content {
+    gap: var(--btm-space-lg);
+    padding: 0 var(--btm-space-md);
+  }
+
+  .btm-video-section {
+    padding: 0 var(--btm-space-md);
+  }
+
+  .btm-section-header {
+    padding: 0 var(--btm-space-md);
+  }
+}
+
+/* ============================================
+   RESPONSIVE: TABLET LARGE (992px - 1024px)
+============================================ */
+@media (max-width: 1024px) and (min-width: 993px) {
+  .btm-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .btm-hero-title {
+    font-size: var(--btm-text-4xl);
+    line-height: 1.1;
+    margin-bottom: var(--btm-space-sm);
+    padding: 0 var(--btm-space-md);
+    box-sizing: border-box;
+  }
+  
+  /* Reduced spacing for tablet */
+  .btm-logo-section {
+    padding: var(--btm-space-xs) 0 0 0;
+  }
+  
+  .btm-logo {
+    max-width: 150px;
+  }
+  
+  .btm-badge-endangered {
+    margin-bottom: var(--btm-space-xs);
+    margin-top: var(--btm-space-xs);
+  }
+  
+  .btm-hero-subtitle {
+    font-size: var(--btm-text-lg);
+    padding: 0 var(--btm-space-md);
+    letter-spacing: 0.3px;
+    line-height: 1.6;
+    font-style: normal;
+  }
+  
+  .btm-cta-button {
+    width: auto;
+    max-width: calc(100% - 2 * var(--btm-space-md));
+    padding: var(--btm-space-sm) var(--btm-space-lg);
+    font-size: var(--btm-text-base);
+    white-space: nowrap;
+    flex-wrap: nowrap;
+  }
+  
+  .btm-cta-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .btm-support-content,
+  .btm-action-content {
+    grid-template-columns: 1fr;
+    gap: var(--btm-space-xl);
+  }
+
+  .btm-support-image-container {
+    order: -1;
+  }
+
+  .btm-action-text {
+    order: 2;
+  }
+
+  .btm-action-image-container {
+    order: 1;
+  }
+
+  .btm-action-content {
+    grid-template-columns: 1fr;
+    gap: var(--btm-space-lg);
+    padding: 0 var(--btm-space-md);
+  }
+
+  .btm-action-section .btm-section-title-alt {
+    font-size: var(--btm-text-3xl);
+  }
+
+  .btm-image-frame {
+    display: none;
+  }
+
+  .btm-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--btm-space-md);
+  }
+}
+
+/* ============================================
+   RESPONSIVE: MOBILE (< 768px)
+============================================ */
+@media (max-width: 768px) {
+  :root {
+    --btm-text-base: 1rem;
+    --btm-text-lg: 1.125rem;
+    --btm-text-xl: 1.25rem;
+    --btm-text-2xl: 1.5rem;
+    --btm-text-3xl: 1.875rem;
+    --btm-text-4xl: 2.25rem;
+    --btm-text-5xl: 2.75rem;
+  }
+
+  .btm-main-container {
+    padding: var(--btm-space-md);
+  }
+
+  .btm-hero-section {
+    min-height: 70vh;
+  }
+
+  .btm-hero-content {
+    padding: var(--btm-space-md) var(--btm-space-lg);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .btm-hero-title {
+    font-size: var(--btm-text-3xl);
+    line-height: 1.1;
+    margin-bottom: var(--btm-space-sm);
+    padding: 0 var(--btm-space-sm);
+    box-sizing: border-box;
+    width: 100%;
+  }
+  
+  .btm-title-line,
+  .btm-title-highlight {
+    font-size: inherit;
+    line-height: 1.1;
+  }
+  
+  /* Reduced spacing for mobile */
+  .btm-logo-section {
+    padding: var(--btm-space-xs) var(--btm-space-md) 0 var(--btm-space-md);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .btm-logo {
+    max-width: 120px;
+    width: auto;
+  }
+  
+  .btm-badge-endangered {
+    margin-bottom: var(--btm-space-xs);
+    margin-top: var(--btm-space-xs);
+    padding: 0 var(--btm-space-sm);
+  }
+  
+  .btm-badge-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .btm-hero-subtitle {
+    padding: 0 var(--btm-space-md);
+    font-size: var(--btm-text-base);
+    width: 100%;
+    box-sizing: border-box;
+    letter-spacing: 0.2px;
+    line-height: 1.5;
+  }
+
+  .btm-cta-button {
+    width: auto;
+    max-width: calc(100% - 2 * var(--btm-space-md));
+    margin: 0 auto;
+    padding: var(--btm-space-sm) var(--btm-space-md);
+    font-size: var(--btm-text-sm);
+    box-sizing: border-box;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+  }
+  
+  .btm-cta-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .btm-typewriter {
+    white-space: normal;
+    border-right: none;
+    animation: none;
+  }
+
+  /* En móvil, las stats se muestran como carrusel horizontal,
+     una sola línea desplazable. */
+  .btm-stats-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: var(--btm-space-md);
+    padding: 0 var(--btm-space-md) var(--btm-space-md);
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .btm-stat-card {
+    flex: 0 0 70%;
+    max-width: 70%;
+    padding: var(--btm-space-sm);
+    scroll-snap-align: center;
+    min-height: 350px;
+  }
+
+  .btm-stat-image {
+    opacity: 0.6;
+  }
+
+  .btm-connect-links {
+    flex-direction: column;
+    gap: var(--btm-space-lg);
+    align-items: center;
+  }
+
+  .btm-connect-icon-wrapper {
+    width: 70px;
+    height: 70px;
+  }
+
+  .btm-connect-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .btm-connect-label {
+    font-size: var(--btm-text-sm);
+  }
+
+  .btm-video-section {
+    padding: 0 var(--btm-space-md);
+  }
+
+  .btm-video-wrapper {
+    max-width: 100%;
+  }
+
+  .btm-donation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Galería de apoyo en móvil: dos columnas simétricas, sin huecos raros */
+  .btm-support-gallery {
+    grid-template-columns: 1fr 1fr;   /* Siempre dos columnas */
+    grid-auto-rows: auto;            /* Altura según el contenido */
+  }
+
+  .btm-support-thumb {
+    height: auto;
+  }
+
+  /* En móvil mantenemos el ancho completo, pero con menos padding lateral
+     y texto más pequeño para que no ocupe tanto alto. */
+  .btm-support-section {
+    padding: var(--btm-space-lg) var(--btm-space-md);
+    margin-bottom: var(--btm-space-xl); /* reduce espacio antes de Historic Wins */
+  }
+
+  .btm-support-section .btm-section-title-alt {
+    font-size: var(--btm-text-2xl);
+    text-align: left;
+    margin-bottom: var(--btm-space-md);
+  }
+
+  .btm-support-section .btm-paragraph {
+    font-size: var(--btm-text-sm);
+    line-height: 1.6;
+    margin-bottom: var(--btm-space-xs);
+  }
+
+  /* En móvil quitamos spans especiales para evitar vacíos visuales */
+  .btm-support-thumb--tall,
+  .btm-support-thumb--wide {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .btm-section-title {
+    font-size: var(--btm-text-2xl);
+  }
+
+  .btm-connect-links {
+    flex-direction: column;
+    gap: var(--btm-space-lg);
+    align-items: center;
+  }
+
+  .btm-connect-icon-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+
+  .btm-connect-icon {
+    width: 28px;
+    height: 28px;
+    color: var(--btm-blue);
+  }
+
+  .btm-connect-label {
+    color: var(--btm-blue);
+  }
+}
+
+@media (max-width: 480px) {
+  .btm-hero-section {
+    min-height: 85vh;
+  }
+  
+  .btm-hero-title {
+    font-size: var(--btm-text-2xl);
+    line-height: 1.05;
+    margin-bottom: var(--btm-space-xs);
+    padding: 0 var(--btm-space-sm);
+  }
+
+  .btm-hero-subtitle {
+    font-size: var(--btm-text-sm);
+    margin-bottom: var(--btm-space-md);
+    padding: 0 var(--btm-space-sm);
+    line-height: 1.5;
+    letter-spacing: 0.2px;
+    font-style: normal;
+  }
+
+  .btm-badge-endangered {
+    padding: 0 var(--btm-space-xs);
+    margin-bottom: var(--btm-space-xs);
+  }
+
+  .btm-badge-endangered span {
+    font-size: var(--btm-text-xs);
+    letter-spacing: 0.5px;
+  }
+  
+  .btm-badge-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Reduced spacing for small mobile */
+  .btm-logo-section {
+    padding: var(--btm-space-xs) var(--btm-space-sm) 0 var(--btm-space-sm);
+  }
+  
+  .btm-logo {
+    max-width: 100px;
+  }
+  
+  .btm-hero-content {
+    padding: var(--btm-space-sm) var(--btm-space-md);
+    width: 100%;
+  }
+  
+  .btm-title-line,
+  .btm-title-highlight {
+    line-height: 1.05;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .btm-cta-button {
+    width: auto;
+    max-width: calc(100% - 2 * var(--btm-space-sm));
+    padding: var(--btm-space-sm) var(--btm-space-md);
+    font-size: var(--btm-text-xs);
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    gap: var(--btm-space-xs);
+    min-height: 44px;
+  }
+  
+  .btm-cta-button span {
+    white-space: nowrap;
+  }
+  
+  .btm-cta-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .btm-stat-card {
+    flex: 0 0 85%;
+    max-width: 85%;
+    min-height: 320px;
+  }
+
+  .btm-stat-image {
+    opacity: 0.55;
+  }
+
+  .btm-stats-grid {
+    padding: 0 var(--btm-space-sm) var(--btm-space-sm);
+  }
+
+  /* Ajuste extra para la sección de apoyo en móviles muy pequeños:
+     aún más compacto y con texto ligeramente más pequeño. */
+  .btm-support-section {
+    padding: var(--btm-space-md) var(--btm-space-sm);
+  }
+
+  .btm-support-section .btm-section-title-alt {
+    font-size: var(--btm-text-xl);
+    text-align: left;
+    margin-bottom: var(--btm-space-sm);
+  }
+
+  .btm-support-section .btm-paragraph {
+    font-size: var(--btm-text-xs);
+    line-height: 1.5;
+    margin-bottom: var(--btm-space-xs);
+  }
+
+  .btm-connect-links {
+    flex-direction: column;
+    gap: var(--btm-space-lg);
+    align-items: center;
+  }
+
+  .btm-connect-icon-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+
+  .btm-connect-icon {
+    width: 26px;
+    height: 26px;
+    color: var(--btm-blue);
+  }
+
+  .btm-connect-label {
+    font-size: var(--btm-text-xs);
+    color: var(--btm-blue);
+  }
+
+  .btm-video-section {
+    padding: 0 var(--btm-space-sm);
+  }
+
+  .btm-action-content {
+    padding: 0 var(--btm-space-sm);
+  }
+
+  .btm-donation-list {
+    padding: 0 var(--btm-space-sm);
+  }
+
+  .btm-section-header {
+    padding: 0 var(--btm-space-sm);
+  }
+}
+
+/* --------------------------------------------------
+   Overrides: Donación — quitar fondo blanco y sombras
+--------------------------------------------------- */
+.btm-donation-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--btm-space-2xl);
+}
+
+/* Override styles removed - cards now use main styles with white transparent background, golden borders, and shadows */
+
+/* Overrides removed - using main styles above for white background and card design */
+
+
+/* ============================================
+   PRINT STYLES
+============================================ */
+@media print {
+  .btm-body {
+    background: white;
+    color: black;
+  }
+
+  .btm-background-overlay,
+  .btm-hero-gradient-overlay,
+  .btm-video-section {
+    display: none;
+  }
+}
