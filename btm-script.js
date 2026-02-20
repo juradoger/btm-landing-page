@@ -12,6 +12,40 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ============================================
+       PREVENT UNWANTED SCROLL TO TOP
+       Fix for automatic scroll to top issue
+    ============================================ */
+  // Save current scroll position
+  let btmLastScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+
+  // Prevent scroll to top on page load unless there's a hash
+  if (window.location.hash) {
+    // If there's a hash, scroll to it after a short delay
+    setTimeout(() => {
+      const target = document.querySelector(window.location.hash)
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" })
+      }
+    }, 100)
+  }
+
+  // Prevent default anchor link behavior that might cause scroll to top
+  document.querySelectorAll('a[href="#"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault()
+    })
+  })
+
+  // Monitor for unwanted scroll to top
+  let btmScrollTimeout
+  window.addEventListener("scroll", () => {
+    clearTimeout(btmScrollTimeout)
+    btmScrollTimeout = setTimeout(() => {
+      btmLastScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+    }, 100)
+  }, { passive: true })
+
+  /* ============================================
        SCROLL ANIMATIONS
        Fade in elements as they enter viewport
     ============================================ */
@@ -157,6 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (btmStatsGrid && btmStatsCards.length && btmStatsDots.length) {
+    let btmCurrentCardIndex = 0
+    let btmAutoPlayInterval = null
+
     // Observe which card is centered in the horizontal scroll (mainly on mobile)
     const btmStatsObserver = new IntersectionObserver(
       (entries) => {
@@ -164,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (entry.isIntersecting) {
             const index = Array.from(btmStatsCards).indexOf(entry.target)
             if (index >= 0) {
+              btmCurrentCardIndex = index
               btmSetActiveDot(index)
             }
           }
@@ -177,19 +215,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btmStatsCards.forEach((card) => btmStatsObserver.observe(card))
 
+    // Function to scroll to next card
+    function btmScrollToCard(index) {
+      const card = btmStatsCards[index]
+      if (card && btmStatsGrid) {
+        // Only scroll within the stats grid, not the main window
+        // Calculate the scroll position relative to the grid
+        const cardLeft = card.offsetLeft
+        const cardWidth = card.offsetWidth
+        const gridWidth = btmStatsGrid.offsetWidth
+        const scrollLeft = cardLeft - (gridWidth / 2) + (cardWidth / 2)
+        
+        btmStatsGrid.scrollTo({
+          left: scrollLeft,
+          behavior: "smooth",
+        })
+      }
+    }
+
+    // Auto-play carousel - advance every 5 seconds
+    function btmStartAutoPlay() {
+      btmAutoPlayInterval = setInterval(() => {
+        btmCurrentCardIndex = (btmCurrentCardIndex + 1) % btmStatsCards.length
+        btmScrollToCard(btmCurrentCardIndex)
+      }, 5000)
+    }
+
+    // Stop auto-play when user interacts
+    function btmStopAutoPlay() {
+      if (btmAutoPlayInterval) {
+        clearInterval(btmAutoPlayInterval)
+        btmAutoPlayInterval = null
+      }
+    }
+
+    // Restart auto-play after user stops interacting
+    function btmResetAutoPlay() {
+      btmStopAutoPlay()
+      btmStartAutoPlay()
+    }
+
     // Allow tapping dots to jump to a specific card
     btmStatsDots.forEach((dot, index) => {
       dot.addEventListener("click", () => {
-        const card = btmStatsCards[index]
-        if (card) {
-          card.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-            inline: "center",
-          })
-        }
+        btmCurrentCardIndex = index
+        btmScrollToCard(index)
+        btmResetAutoPlay()
       })
     })
+
+    // Stop auto-play when user scrolls manually
+    btmStatsGrid.addEventListener("scroll", btmResetAutoPlay, { passive: true })
+
+    // Start auto-play on load
+    btmStartAutoPlay()
   }
 
   /* ============================================
@@ -199,15 +278,21 @@ document.addEventListener("DOMContentLoaded", () => {
     btmAnchor.addEventListener("click", function (e) {
       const btmTargetId = this.getAttribute("href")
 
-      if (btmTargetId === "#") return
+      if (btmTargetId === "#" || btmTargetId === "#top") {
+        e.preventDefault()
+        return
+      }
 
       const btmTargetElement = document.querySelector(btmTargetId)
 
       if (btmTargetElement) {
         e.preventDefault()
-        btmTargetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
+        // Use requestAnimationFrame to ensure smooth scroll doesn't interfere
+        requestAnimationFrame(() => {
+          btmTargetElement.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          })
         })
       }
     })
